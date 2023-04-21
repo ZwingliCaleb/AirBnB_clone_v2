@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
             param_pattern = '{}=({}|{}|{})'.format(name_patter,
                                                     str_pattern,
                                                     float_patter,
-                                                    int pattern)
+                                                    int_pattern)
 
             for param in params:
                 param_match = re.fullmatch(param_pattern, param)
