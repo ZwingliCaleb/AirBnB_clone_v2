@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] == '{' and pline[-1] =='}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -133,9 +133,9 @@ class HBNBCommand(cmd.Cmd):
             float_pattern = r'(?P<t_float>[-+]?\d+\.\d+)'
             int_pattern = r'(?P<t_int>[-+]?\d+)'
             param_pattern = '{}=({}|{}|{})'.format(name_patter,
-                                                    str_pattern,
-                                                    float_patter,
-                                                    int_pattern)
+                                                   str_pattern,
+                                                   float_patter,
+                                                   int_pattern)
 
             for param in params:
                 param_match = re.fullmatch(param_pattern, param)
@@ -166,7 +166,8 @@ class HBNBCommand(cmd.Cmd):
                             obj_kwargs['created_at'] = str(datetime.now())
                         if not hasattr(obj_kwargs, 'updated_at'):
                             obj_kwargs['updated_at'] = str(datetime.now())
-                        new_instance = HBNBCommand.classes[class_name](**obj_kwargs)
+                        new_instance = HBNBCommand.classes[class_name](**obj_
+                                                                       kwargs)
                         new_instance.save()
                         print(new_instance.id)
                     else:
@@ -370,6 +371,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
