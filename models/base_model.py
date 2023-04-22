@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
+import models
 import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
@@ -39,7 +40,7 @@ class BaseModel:
 
     def __str__(self):
         """Returns a string representation of the instance"""
-        return '[{}] ({}) {}'.format(self.__class__.__name, self.id,
+        return '[{}] ({}) {}'.format(type(self).__name__, self.id,
                                      self.__dict__)
 
     def save(self):
