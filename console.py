@@ -166,17 +166,16 @@ class HBNBCommand(cmd.Cmd):
                             obj_kwargs['created_at'] = str(datetime.now())
                         if not hasattr(obj_kwargs, 'updated_at'):
                             obj_kwargs['updated_at'] = str(datetime.now())
-                        new_instance = HBNBCommand.classes[class_name(
-                            **obj_kwargs)
-                        new_instance.save()
-                        print(new_instance.id)
+                        nw_inst = HBNBCommand.classes[class_name](**obj_kwargs)
+                        nw_inst.save()
+                        print(nw_inst.id)
                     else:
-                        new_instance = HBNBCommand.classes[class_name]()
+                        nw_inst = HBNBCommand.classes[class_name]()
                         for key, value in obj_kwargs.items():
                             if key not in ignored_attrs:
-                                setattr(new_instance, key, value)
-                                new_instance.save()
-                                print(new_instance.id)
+                                setattr(nw_inst, key, value)
+                                nw_inst.save()
+                                print(nw_inst.id)
 
     def help_create(self):
         """ Help information for the create method """
