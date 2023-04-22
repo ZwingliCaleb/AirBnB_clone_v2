@@ -166,8 +166,8 @@ class HBNBCommand(cmd.Cmd):
                             obj_kwargs['created_at'] = str(datetime.now())
                         if not hasattr(obj_kwargs, 'updated_at'):
                             obj_kwargs['updated_at'] = str(datetime.now())
-                        new_instance = HBNBCommand.classes[class_name](**obj_
-                                                                       kwargs)
+                        new_instance = HBNBCommand.classes[class_name(
+                            **obj_kwargs)
                         new_instance.save()
                         print(new_instance.id)
                     else:

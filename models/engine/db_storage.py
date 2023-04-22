@@ -15,9 +15,8 @@ from os import getenv
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
     from models.place import place_amenity
-
     classes = {"User": User, "State": State, "City": City, "Place": Place,
-                 "Amenity": Amenity, "Review": Review}
+               "Amenity": Amenity, "Review": Review}
 
     class DBStorage:
         """ db storage engine for MySQL """
@@ -31,15 +30,17 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
             HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
             HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
             HBNB_ENV = getenv('HBNB_ENV')
-            self.__engine = create_engine(
-                    'mysql+mysqldb://{}:{}@{}/{}'.format(HBNB_MYSQL_USER,
-                                                            HBNB_MYSQL_PWD,
-                                                            HBNB_MYSQL_HOST,
-                                                            HBNB_MYSQL_DB), pool_pre_ping=True)
-                    if HBNB_ENV == 'test':
-                        Base.metadata.drop_all(self.__engine)
+            self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                          format(HBNB_MYSQL_USER,
+                                                 HBNB_MYSQL_PWD,
+                                                 HBNB_MYSQL_HOST,
+                                                 HBNB_MYSQL_DB
+                                                 ), pool_pre_ping=True
+                                          )
+            if HBNB_ENV == 'test':
+                Base.metadata.drop_all(self.__engine)
 
-        def all(self, cls = None):
+        def all(self, cls=None):
             """
             querying on this session;the cls objects to return a dictionary
             like key = <class-name>.<object-id>  value = object
@@ -77,15 +78,17 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
             """
             self.__session.commit()
 
-        def delete(self, obj = None):
+        def delete(self, obj=None):
             """ delete from a database session """
             if obj is not None:
-                self.__session.query(type(obj)).filter(type(obj).id == obj.id).delete()
+                self.__session.query(type(obj)).filter(type(obj)
+                                                       .id == obj.id).delete()
 
         def reload(self):
             """ reload the DB """
-            Base.metadat.create_all(self.__engine)
-            session_factory = sessionmaker(bind = self.__engine, expire_on_commit = False)
+            Base.metadata.create_all(self.__engine)
+            session_factory = sessionmaker(bind=self.__engine,
+                                           expire_on_commit=False)
             self.__session = scoped_session(session_factory)()
 
         def close(self):
