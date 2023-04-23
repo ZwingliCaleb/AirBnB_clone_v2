@@ -132,9 +132,9 @@ class HBNBCommand(cmd.Cmd):
             str_pattern = r'(?P<t_str>"([^"]|\")*")'
             float_pattern = r'(?P<t_float>[-+]?\d+\.\d+)'
             int_pattern = r'(?P<t_int>[-+]?\d+)'
-            param_pattern = '{}=({}|{}|{})'.format(name_patter,
+            param_pattern = '{}=({}|{}|{})'.format(name_pattern,
                                                    str_pattern,
-                                                   float_patter,
+                                                   float_pattern,
                                                    int_pattern)
 
             for param in params:
