@@ -22,7 +22,7 @@ if storage_type == 'db':
                           )
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
     if storage_type == 'db':
