@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -132,10 +132,10 @@ class HBNBCommand(cmd.Cmd):
             str_pattern = r'(?P<t_str>"([^"]|\")*")'
             float_pattern = r'(?P<t_float>[-+]?\d+\.\d+)'
             int_pattern = r'(?P<t_int>[-+]?\d+)'
-            param_pattern = '{}=({}|{}|{})'.format(name_patter,
-                                                    str_pattern,
-                                                    float_patter,
-                                                    int_pattern)
+            param_pattern = '{}=({}|{}|{})'.format(name_pattern,
+                                                   str_pattern,
+                                                   float_pattern,
+                                                   int_pattern)
 
             for param in params:
                 param_match = re.fullmatch(param_pattern, param)
@@ -166,16 +166,16 @@ class HBNBCommand(cmd.Cmd):
                             obj_kwargs['created_at'] = str(datetime.now())
                         if not hasattr(obj_kwargs, 'updated_at'):
                             obj_kwargs['updated_at'] = str(datetime.now())
-                        new_instance = HBNBCommand.classes[class_name](**obj_kwargs)
-                        new_instance.save()
-                        print(new_instance.id)
+                        nw_inst = HBNBCommand.classes[class_name](**obj_kwargs)
+                        nw_inst.save()
+                        print(nw_inst.id)
                     else:
-                        new_instance = HBNBCommand.classes[class_name]()
+                        nw_inst = HBNBCommand.classes[class_name]()
                         for key, value in obj_kwargs.items():
                             if key not in ignored_attrs:
-                                setattr(new_instance, key, value)
-                                new_instance.save()
-                                print(new_instance.id)
+                                setattr(nw_inst, key, value)
+                                nw_inst.save()
+                                print(nw_inst.id)
 
     def help_create(self):
         """ Help information for the create method """
@@ -323,7 +323,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] is '\"':  # check for quoted arg
+            if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -331,10 +331,10 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
@@ -370,6 +370,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
